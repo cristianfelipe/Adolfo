@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	juguetes
+{% endblock %}
+
+{% block content %}
+	<h3>Juguete seleccionado</h3>
+	<h2>{{ juguete.marca }}  {{ juguete.material }}</h2>
+	<br>
+	
+
+	{% if juguete.imagen %}
+	<img src="/media/{{ juguete.imagen }}" width ="500px" heigth ="500px">
+	{% endif %}
+	<br>
+	<p><b>Marca:    </b>{{ juguete.marca }}</p>
+	<p><b>Material: </b>{{ juguetes.material }} </p>
+	<br>
+	<a href ="/juguetes/page/1">Mostrar lista de Productos</a>
+{% endblock %}

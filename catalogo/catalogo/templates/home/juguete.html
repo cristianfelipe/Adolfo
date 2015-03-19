@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Lista de Productos
+{% endblock %}
+{% block content %}
+	<h1> Lista de Juguetes </h1>
+	<br>
+	{% if user.is_authenticated %}
+
+		<a class ="btn btn-primary" href="{% url 'vista_agregar_producto' %}"> <li class="icon-plus"></li>Agregar un nuevo juguete</a>
+
+	{% endif %}
+	{% if juguetes %}
+	<table class = "table table-hover">
+		<theader>
+			<tr>
+				<th>Marca</th>
+				<th>Tipo</th>
+			
+			</tr>
+		</theader>
+		{% for p in juguetes %}
+			<tbody>
+				<tr>
+					<td>{{ p.marca }}</td>
+					<td>{{ p.tipo }}</td>
+					<td><a class="btn" href="/juguete/{{ p.id }}"><li class = "icon-search"></li>Ver</a></td>
+					<td><a class="btn" href="#"><li class = "icon-shoping-cart"></li>Comprar</a></td>
+						{% if user.is_authenticated %}
+							<td><a class = "btn" href="/edit/juguete/{{ p.id }}"><li class = "icon-pencil"></li>Editar </a></td>
+						{% endif %}
+					</td>
+				</tr>
+			</tbody>
+		{% endfor %}
+	</table>
+	{% else %}
+		<h2>No existen Juguetes activos a la venta</h2>
+	{% endif %}
+
+	{% if juguetes %}
+	<div class="pagination">
+		<div class="pagination pagination-centered">
+			<ul>
+				<li><a href="/juguetes/page/1" > << </a></li>
+				{% if juguetes.has_previous %}
+				<li><a href="/juguetes/page/{{ juguetes.previous_page_number }}">Anterior</a></li>
+				{% else %}
+				<li><a href="#">Anterior</a></li>
+				{% endif %}
+
+				{% if juguetes.has_next %}
+				<li><a href="/juguetes/page/{{ juguetes.next_page_number }}">Siguiente</a></li>
+				{% else %}
+				<li><a href="#">Siguiente</a></li>
+				{% endif %}
+					<li><a href="/juguetes/page/{{ juguetes.paginator.num_pages}}"> >> </a></li>
+			</ul>
+		</div>
+	</div>
+			<br>
+			<h4>Pagina {{ juguetes.number }} de {{ juguetes.paginator.num_pages}}</h4>
+		{% endif %}
+		
+{% endblock %}
